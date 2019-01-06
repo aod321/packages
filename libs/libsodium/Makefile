@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2009-2016 OpenWrt.org
+# Copyright (C) 2009-2014 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,14 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libsodium
-PKG_VERSION:=1.0.16
+PKG_VERSION:=1.0.11
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://download.libsodium.org/libsodium/releases \
-https://github.com/jedisct1/libsodium/releases/download/$(PKG_VERSION)
-PKG_HASH:=eeadc7e1e1bcef09680fb4837d448fbdf57224978f865ac1c16745868fbd0533
-
+PKG_SOURCE_URL:=https://download.libsodium.org/libsodium/releases/old/unsupported
+PKG_MD5SUM:=b58928d035064b2a46fb564937b83540
 PKG_FIXUP:=libtool autoreconf
 PKG_USE_MIPS16:=0
 PKG_INSTALL:=1
@@ -53,6 +51,9 @@ endef
 
 CONFIGURE_ARGS+= \
 	--disable-ssp \
+	--disable-asm \
+	--enable-minimal \
+	--without-pthreads\
 	$(if $(CONFIG_LIBSODIUM_MINIMAL),--enable-minimal=yes,--enable-minimal=no)
 
 define Build/InstallDev
